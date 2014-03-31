@@ -7,7 +7,7 @@ class MultisiteAnalyticsControllerExtension extends Extension {
 	function ShowGoogleAnalytics() {
 		$config = Multisites::inst()->getCurrentSite();
 		if (
-//			Director::isLive() &&
+			Director::isLive() &&
 			$config->GoogleAnalyticsID && 
 			strpos($_SERVER['REQUEST_URI'], '/admin') === false && 
 			strpos($_SERVER['REQUEST_URI'], '/Security') === false && 

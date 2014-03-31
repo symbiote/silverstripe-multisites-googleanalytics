@@ -1,4 +1,4 @@
-<% if CurrentSite.GoogleAnalyticsID %>
+<% if ShowGoogleAnalytics && CurrentSite.GoogleAnalyticsID %>
 	<% if CurrentSite.GoogleAnalyticsUseUniversalAnalytics %>
 		<script type="text/javascript">
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
