@@ -3,4 +3,7 @@ Name: extensions
 ---
 Site:
   extensions:
-    ['MultisitseAnalyticsExtension']
+    ['MultisiteAnalyticsExtension']
+ContentController:
+  extensions:
+    ['MultisiteAnalyticsControllerExtension']
