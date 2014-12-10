@@ -17,6 +17,18 @@ class MultisiteAnalyticsControllerExtension extends Extension {
 		}
 		return false;
 	}
+	
+	/**
+	 * Return a custom url for the GA page view. Can be overwritten for page types
+	 * that allow different views on the same URL, i.e. multi step forms.
+	 * Should return false if default url is to be used.
+	 * Can return the URL to be used as String or in an array with "URL" => "Page Title".
+	 * The page title is only submitted if Universal Analytics is used.
+	 * @return string|array|boolean
+	 */
+	public function getCustomPageViewUrl() {
+		return false;
+	}
 
 	public function onAfterInit() {
 	    
@@ -35,6 +47,26 @@ class MultisiteAnalyticsControllerExtension extends Extension {
 						$domain = trim($config->GoogleAnalyticsCookieDomain);
 					}
 					
+					// page view url
+					$pageview = "ga('send', 'pageview');";
+					if ($urldata = $this->owner->getCustomPageViewUrl()) {
+						if (is_array($urldata)) {
+							$pageview = "";
+							// check if associative array
+							if (array_keys($urldata) !== range(0, count($urldata) - 1)) {
+								foreach ($urldata as $url => $title) {
+									$pageview .= "ga('send', { 'hitType': 'pageview', 'page': '$url', 'title': '$title' });";
+								}
+							} else {
+								foreach ($urldata as $url) {
+									$pageview .= "ga('send', 'pageview', '$url');";
+								}
+							}
+						} else if (is_string($urldata)) {
+							$pageview = "ga('send', 'pageview', '$urldata');";
+						}
+					}
+					
 					// tracking code
 					Requirements::insertHeadTags("
 						<script type=\"text/javascript\">
@@ -43,7 +75,7 @@ class MultisiteAnalyticsControllerExtension extends Extension {
 							m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 							})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 							ga('create', '".$config->GoogleAnalyticsID."', '".$domain."');
-							ga('send', 'pageview');
+							".$pageview."
 						</script>
 					");
 				}
@@ -66,13 +98,33 @@ class MultisiteAnalyticsControllerExtension extends Extension {
 						$domain = "_gaq.push(['_setDomainName', '".trim($config->GoogleAnalyticsCookieDomain)."']);";
 					}
 					
+					// page view url
+					$pageview = "_gaq.push(['_trackPageview']);";
+					if ($urldata = $this->owner->getCustomPageViewUrl()) {
+						if (is_array($urldata)) {
+							$pageview = "";
+							// check if associative array
+							if (array_keys($urldata) !== range(0, count($urldata) - 1)) {
+								foreach ($urldata as $url => $title) {
+									$pageview .= "_gaq.push(['_trackPageview', '$url']);";
+								}
+							} else {
+								foreach ($urldata as $url) {
+									$pageview .= "_gaq.push(['_trackPageview', '$url']);";
+								}
+							}
+						} else if (is_string($urldata)) {
+							$pageview = "_gaq.push(['_trackPageview', '$urldata']);";
+						}
+					}
+					
 					// tracking code
 					Requirements::insertHeadTags("
 						<script type=\"text/javascript\">
 							var _gaq = _gaq || [];
 							_gaq.push(['_setAccount', '".$config->GoogleAnalyticsID."']);
 							".$domain."
-							_gaq.push(['_trackPageview']);
+							".$pageview."
 							(function() {
 								var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
 								ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
