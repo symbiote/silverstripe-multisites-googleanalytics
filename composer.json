@@ -1,5 +1,5 @@
 {
-	"name": "silverstripe/multisites-googleanalytics",
+	"name": "silverstripe-australia/multisites-googleanalytics",
 	"description": "Adds Google Analytics tracking code to each multisite",
 	"type": "silverstripe-module",
 	"keywords": ["silverstripe", "multisites", "analytics"],
@@ -7,7 +7,7 @@
 	"authors": [
 	{
 		"name": "Shea Dawson",
-		"email": "shea@silverstripe.com.au"
+		"email": "shea@livesource.co.nz"
 	}
 	],
 
