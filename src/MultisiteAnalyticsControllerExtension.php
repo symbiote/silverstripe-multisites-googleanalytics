@@ -1,8 +1,15 @@
 <?php
 
+namespace Symbiote\Multisites\GoogleAnalytics;
+
+use SilverStripe\Control\Director;
+use SilverStripe\View\Requirements;
+use SilverStripe\Core\Extension;
+use Symbiote\Multisites\Multisites;
+
 class MultisiteAnalyticsControllerExtension extends Extension {
 	
-	static $use_template = false;
+	private static $use_template = false;
 	
 	function ShowGoogleAnalytics() {
 		$config = Multisites::inst()->getCurrentSite();
@@ -32,7 +39,7 @@ class MultisiteAnalyticsControllerExtension extends Extension {
 
 	public function onAfterInit() {
 	    
-		if ($this->ShowGoogleAnalytics()) {
+		if ($this->owner->ShowGoogleAnalytics()) {
 			$config = Multisites::inst()->getCurrentSite();
 			
 			if ($config->GoogleAnalyticsUseUniversalAnalytics) {
@@ -82,8 +89,8 @@ class MultisiteAnalyticsControllerExtension extends Extension {
 				
 				// event tracking
 				if ($config->GoogleAnalyticsUseEventTracking) {
-					Requirements::javascript('framework/thirdparty/jquery/jquery.js');
-					Requirements::javascript('multisites-googleanalytics/javascript/event-tracking-universal.js');
+					Requirements::javascript('silverstripe/admin: thirdparty/jquery/jquery.js');
+					Requirements::javascript('symbiote/silverstripe-multisites-googleanalytics: client/javascript/event-tracking-universal.js');
 				}
 			
 			} else {
@@ -137,8 +144,8 @@ class MultisiteAnalyticsControllerExtension extends Extension {
 				
 				// event tracking
 				if ($config->GoogleAnalyticsUseEventTracking) {
-					Requirements::javascript('framework/thirdparty/jquery/jquery.js');
-					Requirements::javascript('multisites-googleanalytics/javascript/event-tracking.js');
+					Requirements::javascript('silverstripe/admin: thirdparty/jquery/jquery.js');
+					Requirements::javascript('symbiote/silverstripe-multisites-googleanalytics: client/javascript/event-tracking.js');
 				}
 				
 			}

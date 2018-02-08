@@ -1,5 +1,15 @@
 <?php
 
+namespace Symbiote\Multisites\GoogleAnalytics\Tests;
+
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Control\Director;
+use SilverStripe\Dev\FunctionalTest;
+use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Core\Kernel;
+use Symbiote\Multisites\Model\Site;
+use Symbiote\Multisites\Multisites;
+
 class AnalyticFunctionalTests extends FunctionalTest {
 
 	protected $usesDatabase = true;
@@ -19,20 +29,20 @@ class AnalyticFunctionalTests extends FunctionalTest {
 			)
 		);
 		$site->writeToStage('Stage');
-		$site->publish('Stage', 'Live');
-		$home = Page::create(
+		$site->publishRecursive();
+		$home = \Page::create(
 			array(
 				'Title' => 'Home',
 				'ParentID' => $site->ID
 			)
 		);
 		$home->writeToStage('Stage');
-		$home->publish('Stage', 'Live');
+		$home->publishRecursive();
 
 		// The environment needs to be live for the snippets to appear.
 
-		$config = Config::inst();
-		$config->update('Director', 'environment_type', 'live');
+		$kernel = Injector::inst()->get(Kernel::class);
+		$kernel->setEnvironment('live');
 
 		// Determine whether the correct snippet was included in the source.
 
@@ -42,8 +52,8 @@ class AnalyticFunctionalTests extends FunctionalTest {
 		// Update the site to use universal analytics.
 
 		$site->GoogleAnalyticsUseUniversalAnalytics = 1;
-		$site->writeToStage('Stage');
-		$site->publish('Stage', 'Live');
+		$site->write();
+		$site->publishRecursive();
 
 		// The site object is currently cached, so we need to retrieve it again.
 

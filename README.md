@@ -4,7 +4,7 @@ Adds Google Analytics tracking code to each multisite
 
 ## Requirements
 
-* SilverStripe 3.0.*
+* SilverStripe 4
 * Multisites
 
 ## Usage
@@ -16,11 +16,11 @@ The code only gets inserted in live mode.
 ### Using a template for the tracking code
 
 If you want to use the template version of the tracking code (i.e. if you need 
-to modify the tracking code for your project/theme) add the following line to 
-your _config.php:
+to modify the tracking code for your project/theme) add the following YAML:
 
-```
-MultisiteAnalyticsControllerExtension::$use_template = true;
+```yaml
+MultisiteAnalyticsControllerExtension
+  use_template: true
 ```
 
 Use `<% include GoogleAnalytics %>` in your layout template to insert the tracking code.

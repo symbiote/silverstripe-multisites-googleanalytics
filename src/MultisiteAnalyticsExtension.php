@@ -1,11 +1,21 @@
 <?php
+
+namespace Symbiote\Multisites\GoogleAnalytics;
+
+use SilverStripe\ORM\FieldType\DBBoolean;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Forms\FieldGroup;
+use SilverStripe\ORM\DataExtension;
+
 class MultisiteAnalyticsExtension extends DataExtension {
 	
-	static $db = array(
+	private static $db = array(
 		'GoogleAnalyticsID' => 'Varchar',
-		'GoogleAnalyticsUseUniversalAnalytics' => 'Boolean',
+		'GoogleAnalyticsUseUniversalAnalytics' => DBBoolean::class,
 		'GoogleAnalyticsCookieDomain' => 'Varchar(255)',
-		'GoogleAnalyticsUseEventTracking' => 'Boolean',
+		'GoogleAnalyticsUseEventTracking' => DBBoolean::class,
 	);
 
 	public function updateSiteCMSFields(FieldList $fields){
@@ -19,7 +29,7 @@ class MultisiteAnalyticsExtension extends DataExtension {
 				)
 				->setTitle(_t('MultisitseAnalyticsExtension.USEUNIVERSALANALYTICS', 'Use Universal Analytics'))
 				->setName('GAUniversalAnalytics')
-				->setRightTitle(
+				->setDescription(
 					_t(
 						'MultisitseAnalyticsExtension.UNIVERSALANALYTICSHELP', 
 						"Universal Analytics is the new analytics implementation from Google. If your Google Analytics account is set up to use Universal Analytics, please check this box."
@@ -30,7 +40,7 @@ class MultisiteAnalyticsExtension extends DataExtension {
 					'GoogleAnalyticsCookieDomain',
 					_t('MultisitseAnalyticsExtension.NONSTANDARDCOOKIEDOMAIN', 'Non-Standard Cookie Domain')
 				)
-				->setRightTitle(
+				->setDescription(
 					_t(
 						'MultisitseAnalyticsExtension.COOKIEDOMAINHELP',
 						"If you want to use a non-standard cookie domain for your tracking, please enter it here. If this field is left empty, 'auto' will be used."
@@ -42,7 +52,7 @@ class MultisiteAnalyticsExtension extends DataExtension {
 				)
 				->setTitle(_t('MultisitseAnalyticsExtension.USEEVENTTRACKING', 'Use Event Tracking'))
 				->setName('GAEventTracking')
-				->setRightTitle(
+				->setDescription(
 					_t(
 						'MultisitseAnalyticsExtension.EVENTTRACKINGHELP',
 						"Activate this box if you want to track events like downloads and clicks on external, email and phone links. "
