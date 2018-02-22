@@ -1,9 +1,9 @@
 ---
-Name: extensions
+Name: multisites-googleanalytics-extensions
 ---
-Site:
+Symbiote\Multisites\Model\Site:
   extensions:
-    ['MultisiteAnalyticsExtension']
-ContentController:
+    - Symbiote\Multisites\GoogleAnalytics\MultisiteAnalyticsExtension
+SilverStripe\CMS\Controllers\ContentController:
   extensions:
-    ['MultisiteAnalyticsControllerExtension']
+    - Symbiote\Multisites\GoogleAnalytics\MultisiteAnalyticsControllerExtension

@@ -1,0 +1,4 @@
+mappings:
+  AnalyticFunctionalTests: Symbiote\Multisites\GoogleAnalytics\Tests\AnalyticFunctionalTests
+  MultisiteAnalyticsControllerExtension: Symbiote\Multisites\GoogleAnalytics\MultisiteAnalyticsControllerExtension
+  MultisiteAnalyticsExtension: Symbiote\Multisites\GoogleAnalytics\MultisiteAnalyticsExtension
