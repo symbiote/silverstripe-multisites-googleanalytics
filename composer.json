@@ -22,5 +22,8 @@
 			"client"
 		]
 	},
+	"replace": {
+		"sheadawson/multisites-googleanalytics": "self.version"
+	},
 	"minimum-stability": "dev"
 }
