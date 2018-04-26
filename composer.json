@@ -19,6 +19,7 @@
 	},
 
 	"extra": {
+		"installer-name": "multisites-googleanalytics",
 		"branch-alias": {
 			"dev-master": "1.0.x-dev"
 		}
